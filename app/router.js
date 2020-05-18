@@ -6,6 +6,6 @@
 module.exports = app => {
   // const { router, controller } = app;
   // router.get('/', controller.home.index);
-  require('./router/view')(app)
-  require('./router/console')(app)
+  require('./router/view')(app);
+  require('./router/console')(app);
 };

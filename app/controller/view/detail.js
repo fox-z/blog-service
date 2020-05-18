@@ -2,25 +2,20 @@
 
 const Controller = require('egg').Controller
 
-class HomeController extends Controller {
-  async index() {
-    const { ctx, app } = this;
-    console.log(app.mysql.get, 'app');
-    const result = await app.mysql.get('blog_content', {});
-    // console.log(result)
-    ctx.body = result;
-  }
+class DetailController extends Controller {
 
-  async getArticleList() {
+  async getArticleDetail() {
     // %H:%i:%s
     const { ctx, app } = this;
+    const id = ctx.query.id;
     const sql = 'SELECT article.id as id,' +
               'article.title as title,' +
               'article.introduce as introduce,' +
               "FROM_UNIXTIME(article.addTime,'%Y-%m-%d' ) as addTime," +
               'article.view_count as viewCount ,' +
               'article_type.typeName as typeName ' +
-              'FROM article LEFT JOIN article_type ON article.type_id = article_type.id';
+              'FROM article LEFT JOIN article_type ON article.type_id = article_type.id ' +
+              'WHERE article.id=' + id;
 
     const results = await app.mysql.query(sql);
 
@@ -30,5 +25,4 @@ class HomeController extends Controller {
   }
 }
 
-module.exports = HomeController;
-
+module.exports = DetailController;
